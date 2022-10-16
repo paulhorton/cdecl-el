@@ -29,8 +29,20 @@
 (defvar cdecl-program "cdecl"
   "Name of the external cdecl program.")
 
-(defun cdecl-explain (expr)
-  "Run cdecel 'explain' on EXPR."
+
+(defun cdecl-explain ()
+  "Run 'cdecl explain' on expression.
+When region active, use it as the expression."
+  (interface)
+  (call-interactively
+   (if (region-active-p)
+      #'cdecl-explain-region
+     #'cdecl-explain/setup-buffer
+     )))
+
+
+(defun cdecl-explain/setup-buffer (expr)
+  "Run 'cdecl explain' on EXPR and display results in a buffer."
   (interactive "sExpr: \n")
   (let ((buf (get-buffer-create " *cdecl*"))
         (cmd (concat
@@ -45,7 +57,7 @@
 
 (defun cdecl-explain-region (r-s r-e)
   (interactive "r")
-  (cdecl-explain (buffer-substring-no-properties r-s r-e)))
+  (cdecl-explain/setup-buffer (buffer-substring-no-properties r-s r-e)))
 
 ;; (cdecl-explain "int * foo")
 ;; int (*(*foo)(void))[3]
