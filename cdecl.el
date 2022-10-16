@@ -27,7 +27,7 @@
 ;;; Code:
 
 (defvar cdecl-program "cdecl"
-  "The program to run.")
+  "Name of the external cdecl program.")
 
 (defun cdecl-explain (expr)
   "Run cdecel 'explain' on EXPR."
