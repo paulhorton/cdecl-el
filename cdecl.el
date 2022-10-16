@@ -54,12 +54,15 @@ When region active, use it as the expression."
         (cmd (concat
               "echo 'explain " expr "' |"
               cdecl-program)))
-    (save-excursion
-      (set-buffer buf)
-      (erase-buffer)
-      (call-process-shell-command cmd nil buf t nil))
-    (switch-to-buffer-other-window buf)
-    (shrink-window-if-larger-than-buffer)))
+    (with-current-buffer buf
+      (let  (buffer-read-only)
+        (erase-buffer)
+        (call-process-shell-command cmd nil buf t nil)
+        )
+      (special-mode)
+      (switch-to-buffer-other-window buf)
+      (shrink-window-if-larger-than-buffer)
+      )))
 
 
 ;; (cdecl-explain "int * foo")
