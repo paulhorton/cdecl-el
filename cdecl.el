@@ -33,12 +33,18 @@
 (defun cdecl-explain ()
   "Run 'cdecl explain' on expression.
 When region active, use it as the expression."
-  (interface)
+  (interactive)
   (call-interactively
    (if (region-active-p)
       #'cdecl-explain-region
      #'cdecl-explain/setup-buffer
      )))
+
+
+(defun cdecl-explain-region (r-s r-e)
+  "Run 'cdecl explain' on region"
+  (interactive "r")
+  (cdecl-explain/setup-buffer (buffer-substring-no-properties r-s r-e)))
 
 
 (defun cdecl-explain/setup-buffer (expr)
@@ -55,9 +61,6 @@ When region active, use it as the expression."
     (switch-to-buffer-other-window buf)
     (shrink-window-if-larger-than-buffer)))
 
-(defun cdecl-explain-region (r-s r-e)
-  (interactive "r")
-  (cdecl-explain/setup-buffer (buffer-substring-no-properties r-s r-e)))
 
 ;; (cdecl-explain "int * foo")
 ;; int (*(*foo)(void))[3]
