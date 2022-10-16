@@ -44,7 +44,7 @@ When region active, use it as the expression."
 (defun cdecl-explain/setup-buffer (expr)
   "Run 'cdecl explain' on EXPR and display results in a buffer."
   (interactive "sExpr: \n")
-  (let ((buf (get-buffer-create " *cdecl*"))
+  (let ((buf (get-buffer-create "*cdecl*"))
         (cmd (concat
               "echo 'explain " expr "' |"
               cdecl-program)))
